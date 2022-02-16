@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644655850118",
+    "project_id": "flash-chat-4c1d9",
+    "storage_bucket": "flash-chat-4c1d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644655850118:android:eeaa403adcab808adae707",
+        "android_client_info": {
+          "package_name": "co.lovesaemi.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644655850118-kd5d29sn4a3d9uvuldcjk1ut40ql9dfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC9iJnHh0HJAaI1YfBEZAAFxVNWThUtwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644655850118-kd5d29sn4a3d9uvuldcjk1ut40ql9dfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

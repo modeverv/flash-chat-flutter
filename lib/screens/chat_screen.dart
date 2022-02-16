@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,34 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _store = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  User user;
+  String message;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+    messageStream();
+  }
+
+  void getCurrentUser() async {
+    final u = _auth.currentUser;
+    this.user = u;
+    if (this.user != null) {
+      print(user.email);
+    }
+  }
+
+  void messageStream() async {
+    await for (var messages in _store.collection('messages').snapshots()) {
+      for (var message in messages.docs) {
+        print(message.data());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.close),
-              onPressed: () {
-                //Implement logout functionality
+              onPressed: () async {
+                await _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -37,14 +68,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        message = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      //Implement send functionality.
+                    onPressed: () async {
+                      try {
+                        await _store.collection("messages").add({
+                          'message': message,
+                          'sender': user.email,
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                     child: Text(
                       'Send',
